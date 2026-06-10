@@ -2,15 +2,18 @@ import { Router } from "express";
 import { getParamsId } from "../utils/middlewares.mjs";
 import {products} from "../utils/constants.mjs";
 
+
 const router = Router();
 
 router.get("/api/products",(req,res)=>{
+    req.session.visited = true;
+    console.log(req.session.id);
     const {query:{filter,value}}= req;
     console.log(filter,value);
     if(filter && value){
-        return res.send(products.filter(((product)=>product[filter].toLowerCase().includes(value))));
+        return res.send(products.filter(((product)=>product[filter].toString().toLowerCase().includes(value.toLowerCase()))));
     }    
-    res.send(users);
+    return res.send(products);
 });
 
 router.get("/api/products/:id",getParamsId,(req,res)=>{
