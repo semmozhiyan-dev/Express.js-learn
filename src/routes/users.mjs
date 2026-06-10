@@ -3,17 +3,27 @@ import { getParamsId,getUserIndexById } from "../utils/middlewares.mjs";
 import {users} from "../utils/constants.mjs"
 import {createUserValidationSchema} from '../utils/validationSchema.mjs';
 import { validationResult,matchedData,checkSchema } from "express-validator";
-
+import cookieParser from "cookie-parser";
 const router = Router();
 
 
 router.get("/api/users",(req,res)=>{
-    const {query:{filter,value}}= req;
-    console.log(filter,value);
-    if(filter && value){
-        return res.send(users.filter(((user)=>user[filter].toLowerCase().includes(value))));
-    }    
-    res.send(users);
+
+    console.log(req.signedCookies);
+    if(req.signedCookies.user && req.signedCookies.user === "Admin"){
+        const {query:{filter,value}}= req;
+        if(filter && value){
+            return res.send(users.filter(((user)=>user[filter].toLowerCase().includes(value))));
+        }    
+        return res.send(users);
+
+    }
+    else{
+        res.send({msg:"you are not Admin  / YOU DONT HAVE RIGHT COOKIE"});
+    }
+
+
+    
 });
 
 router.get("/api/users/:id",getParamsId,(req,res)=>{
