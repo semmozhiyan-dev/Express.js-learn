@@ -4,7 +4,9 @@ import {users} from "../utils/constants.mjs"
 import {createUserValidationSchema} from '../utils/validationSchema.mjs';
 import { validationResult,matchedData,checkSchema } from "express-validator";
 import cookieParser from "cookie-parser";
+import { User } from "../mongoose/schema/user.mjs";
 const router = Router();
+
 
 
 router.get("/api/users",(req,res)=>{
@@ -46,7 +48,7 @@ router.get("/api/users/:id",getParamsId,(req,res)=>{
 router.post("/api/users",
     //validation
     checkSchema(createUserValidationSchema),
-    (req,res)=>{
+    async (req,res)=>{
     const result =validationResult(req);
     if(!result.isEmpty()){
         return res.status(400).send({error:result.array()});
@@ -56,9 +58,14 @@ router.post("/api/users",
     //console.log(result);
     //console.log(req['express-validator#contexts']);
     const body =matchedData(req);
-    const newUser={id:  users[users.length-1].id+1,...body};
-    users.push(newUser);
-    return res.status(201).send(newUser);
+    const newUser  = new User(body);
+    try {
+    const savedUser = await newUser.save();  // ✅ no argument
+    return res.status(201).send(savedUser);
+} catch (err) {
+    console.log(err);
+    return res.status(400).send({ msg: "User not saved" });
+}
     });
 
 router.put("/api/users/:id",getUserIndexById,(req,res)=>{
