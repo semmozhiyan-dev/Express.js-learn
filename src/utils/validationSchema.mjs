@@ -16,6 +16,19 @@ export const createUserValidationSchema ={
             errorMessage:" age must not be empty"
         }
 
+    },
+
+    password: {
+        notEmpty: {
+            errorMessage: "Password must not be empty"
+        },
+        isLength: {
+            options: { min: 2, max: 20 },
+            errorMessage: "Password must be between 6 and 20 characters"
+        },
+        isString: {
+            errorMessage: "Password must be a string"
+        }
     }
 
-}
+};
