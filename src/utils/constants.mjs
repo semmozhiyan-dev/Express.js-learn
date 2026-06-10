@@ -1,13 +1,13 @@
 export const users=[
-    {id:1,user_name:"Goms"},
-    {id:2,user_name:"sem"},
-    {id:3,user_name:"siva"},
-    {id:4,user_name:"sam"},
-    {id:5,user_name:"ruth"},
-    {id:6,user_name:"gojo"},
-    {id:7,user_name:"king"},
-    {id:8,user_name:"queen"},
-    {id:9,user_name:"master"},
+    {id:1,user_name:"Goms", password:"1234"},
+    {id:2,user_name:"sem",password:"12345"},
+    {id:3,user_name:"siva",password:"12346"},
+    {id:4,user_name:"sam",password:"12347"},
+    {id:5,user_name:"ruth",password:"12348"},
+    {id:6,user_name:"gojo",password:"12344"},
+    {id:7,user_name:"king",password:"12343"},
+    {id:8,user_name:"queen",password:"12342"},
+    {id:9,user_name:"master",password:"12341"},
 
 ]
 
