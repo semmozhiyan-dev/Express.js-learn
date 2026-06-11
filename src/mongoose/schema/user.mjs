@@ -8,11 +8,21 @@ const UserSchema =new mongoose.Schema({
     },
     password:{
         type:mongoose.Schema.Types.String,
-        required:true,
+        
     },
     age:{
         type:mongoose.Schema.Types.Number,
-        required:true,
+        required:false,
+    },
+    googleId:{
+        type:mongoose.Schema.Types.String,
+        unique:true,
+        sparse:true, // allows multiple documents to have null googleId
+    },
+    email:{
+        type:mongoose.Schema.Types.String,
+        unique:true,
+        sparse:true, // allows multiple documents to have null email
     }
 
 
