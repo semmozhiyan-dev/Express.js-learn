@@ -5,6 +5,9 @@ import {createUserValidationSchema} from '../utils/validationSchema.mjs';
 import { validationResult,matchedData,checkSchema } from "express-validator";
 import cookieParser from "cookie-parser";
 import { User } from "../mongoose/schema/user.mjs";
+import bcrypt from "bcrypt";
+
+
 const router = Router();
 
 
@@ -58,6 +61,8 @@ router.post("/api/users",
     //console.log(result);
     //console.log(req['express-validator#contexts']);
     const body =matchedData(req);
+    const saltRounds = 10;
+    body.password = await bcrypt.hash(body.password,saltRounds);
     const newUser  = new User(body);
     try {
     const savedUser = await newUser.save();  // ✅ no argument
